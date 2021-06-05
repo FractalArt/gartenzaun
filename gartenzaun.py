@@ -23,7 +23,6 @@ Finally, the secret message reads
 Secret message: "Ti sasce esghsi ertmsae"
 """
 import argparse as ap
-import math
 
 
 def setup_cli():
@@ -58,14 +57,13 @@ def encrypt(message: str) -> str:
 
 def decrypt(secret: str) -> str:
     """Decrypt a `secret` message encrypted using the 'Gartenzaun' method"""
-    middle = int(math.ceil(len(secret) / 2))
-    left, right = secret[: middle], secret[middle:]
     decrypted = []
-    for i in range(len(left)):
-        decrypted.append(left[i])
-        if i < len(right):
-            decrypted.append(right[i])
-
+    middle = len(secret) // 2 + len(secret) % 2
+    for i in range(len(secret)):
+        if i % 2 == 0:
+            decrypted.append(secret[i // 2])
+        else:
+            decrypted.append(secret[middle + (i-1) // 2])
     return "".join(decrypted)
 
 
